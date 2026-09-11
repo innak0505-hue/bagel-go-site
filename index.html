@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BAGEL GO — бренд</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800;900&family=Manrope:wght@400;500;600;700;800&family=PT+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3E7D4;
+    --paper-raised:#FAF5E7;
+    --ink:#211A12;
+    --ink-2:#2A2016;
+    --green:#1F7A4D;
+    --green-deep:#123D28;
+    --green-card:#2A6141;
+    --green-mint:#E7F0E6;
+    --red:#C2391E;
+    --mustard:#D79A3B;
+    --muted:#8C8072;
+    --muted-on-dark:#B9AF9E;
+    --paper-text:#F4E7D4;
+    --line:#E1D2B4;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  h1,h2,h3{margin:0;font-family:'Unbounded',sans-serif;}
+  a{color:inherit;}
+  img{display:block;max-width:100%;height:auto;}
+  .mono{font-family:'PT Mono',monospace;}
+
+  /* ---------- header / nav ---------- */
+  header.site{
+    position:sticky;top:0;z-index:50;
+    background:rgba(243,231,212,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:24px;padding:16px 24px;max-width:1180px;margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:10px;flex:none;font-weight:800;font-size:17px;letter-spacing:0.3px;}
+  .brand .ring{width:20px;height:20px;border-radius:50%;border:3.5px solid var(--green);flex:none;}
+  .navlinks{
+    display:flex;gap:26px;overflow-x:auto;scrollbar-width:none;
+    font-family:'PT Mono',monospace;font-size:12.5px;letter-spacing:1px;text-transform:uppercase;
+  }
+  .navlinks::-webkit-scrollbar{display:none;}
+  .navlinks a{white-space:nowrap;text-decoration:none;color:var(--ink);padding:4px 2px;border-bottom:2px solid transparent;transition:color .15s;}
+  .navlinks a.active{color:var(--green);font-weight:700;border-color:var(--green);}
+
+  /* ---------- generic section scaffolding ---------- */
+  section.chapter{padding:14px 0 6px;}
+  .loop{
+    padding:86px 0 70px;
+    border-bottom:1px solid var(--line);
+  }
+  .loop:last-child{border-bottom:none;}
+  .eyebrow{
+    font-family:'PT Mono',monospace;font-size:12.5px;letter-spacing:3px;text-transform:uppercase;
+    color:var(--muted);margin-bottom:14px;
+  }
+  .step-head{display:flex;align-items:center;gap:18px;margin-bottom:34px;}
+  .step-num{
+    width:56px;height:56px;flex:none;border-radius:50%;border:2px solid var(--green);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Unbounded',sans-serif;font-weight:700;font-size:22px;color:var(--ink);
+  }
+  .step-title{font-size:clamp(26px,4vw,36px);font-weight:700;line-height:1.15;}
+  .lede{font-size:17px;line-height:1.6;max-width:900px;color:var(--ink-2);}
+  .lede + .lede{margin-top:14px;}
+  .section-gap-title{font-size:clamp(22px,3vw,28px);font-weight:700;margin:0 0 20px;}
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 0 90px;}
+  .hero .eyebrow{margin-bottom:26px;}
+  .hero h1{
+    font-size:clamp(56px,12vw,128px);font-weight:900;line-height:0.95;letter-spacing:-1px;
+    margin:0 0 28px;
+  }
+  .hero p.lede{font-size:19px;max-width:640px;}
+  .hero .credit{margin-top:46px;font-family:'PT Mono',monospace;font-size:12.5px;color:var(--muted);letter-spacing:0.5px;}
+
+  /* ---------- cards ---------- */
+  .card{border-radius:22px;padding:34px 34px 38px;}
+  .card.dark{background:var(--ink);color:var(--paper-text);}
+  .card.green{background:var(--green-card);color:var(--paper-text);}
+  .card-head{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+  .dot{width:26px;height:26px;border-radius:50%;flex:none;}
+  .dot.red{background:var(--red);}
+  .dot.white{background:var(--paper-text);}
+  .dot.green{background:var(--green);}
+  .card-head .label{
+    font-family:'PT Mono',monospace;font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase;
+  }
+  .card p{margin:0 0 14px;line-height:1.6;font-size:15.5px;}
+  .card p:last-child{margin-bottom:0;}
+  .card .sub-block{margin-top:26px;padding-top:22px;border-top:1px solid rgba(244,231,212,0.18);}
+  .card .sub-heading{
+    font-family:'PT Mono',monospace;font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase;
+    margin-bottom:10px;opacity:.92;
+  }
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;}
+  @media (max-width:820px){.two-col{grid-template-columns:1fr;}}
+
+  .quote-block{margin-top:22px;}
+  .quote-block .label{
+    font-family:'PT Mono',monospace;font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);
+    display:flex;align-items:center;gap:12px;margin-bottom:10px;
+  }
+  .quote-block .label .dot{width:22px;height:22px;}
+  .quote-block p{
+    font-family:'PT Mono',monospace;color:var(--red);font-size:15px;line-height:1.65;margin:0;max-width:640px;
+  }
+
+  /* ---------- rynok: table ---------- */
+  .rynok-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;margin-top:10px;}
+  @media (max-width:900px){.rynok-grid{grid-template-columns:1fr;}}
+  .table-wrap{overflow-x:auto;}
+  table.market{width:100%;border-collapse:collapse;min-width:460px;font-size:14.5px;}
+  table.market thead th{
+    background:var(--green-card);color:var(--paper-text);text-align:left;font-family:'PT Mono',monospace;
+    font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:14px 16px;font-weight:700;
+  }
+  table.market tbody td{padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.market tbody tr:last-child td{
+    color:var(--red);font-weight:700;border-bottom:none;
+  }
+  table.market tfoot td{padding-top:14px;font-size:12.5px;font-style:italic;color:var(--muted);}
+  .foot-note{margin-top:16px;font-size:12.5px;font-style:italic;color:var(--muted);line-height:1.5;}
+
+  /* ---------- pozitsionirovanie grid ---------- */
+  .pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:34px;}
+  @media (max-width:700px){.pos-grid{grid-template-columns:1fr;}}
+  .pos-card{background:var(--green-card);color:var(--paper-text);border-radius:18px;padding:26px 28px;}
+  .pos-card .card-head{margin-bottom:12px;}
+  .pos-card p{margin:0;font-size:15px;line-height:1.55;}
+
+  /* ---------- idea photo block ---------- */
+  .idea-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;margin-top:8px;}
+  @media (max-width:820px){.idea-grid{grid-template-columns:1fr;}}
+  .idea-photo{border-radius:16px;overflow:hidden;max-width:420px;}
+  .idea-tag{margin-top:18px;}
+  .idea-tag .big{font-family:'Unbounded',sans-serif;font-weight:800;color:var(--green);font-size:19px;letter-spacing:.3px;}
+  .idea-tag .small{font-family:'Unbounded',sans-serif;font-weight:400;color:var(--green);font-size:16px;}
+
+  /* ---------- tone of voice ---------- */
+  .voice-row{
+    background:var(--ink);color:var(--paper-text);border-radius:16px;
+    display:grid;grid-template-columns:280px 1fr;gap:24px;padding:26px 30px;margin-top:18px;
+  }
+  @media (max-width:700px){.voice-row{grid-template-columns:1fr;}}
+  .voice-row h3{font-size:22px;font-weight:600;font-family:'Manrope',sans-serif;line-height:1.25;margin:0;}
+  .voice-row p{margin:0;font-size:15px;line-height:1.55;color:var(--paper-text);opacity:.92;}
+
+  /* ---------- palette ---------- */
+  .palette-strip{display:grid;grid-template-columns:repeat(6,1fr);margin-top:14px;border-radius:4px;overflow:hidden;}
+  @media (max-width:800px){.palette-strip{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:460px){.palette-strip{grid-template-columns:repeat(2,1fr);}}
+  .swatch{min-height:150px;display:flex;flex-direction:column;justify-content:space-between;padding:16px;}
+  .swatch .hex{font-family:'PT Mono',monospace;font-size:12.5px;}
+  .swatch .name{font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;}
+
+  /* ---------- font roles table ---------- */
+  .role-rows{display:flex;flex-direction:column;gap:10px;margin-top:18px;}
+  .role-row{
+    background:var(--ink);color:var(--paper-text);border-radius:10px;
+    display:grid;grid-template-columns:1.1fr 1fr 1fr;align-items:center;gap:14px;
+    padding:18px 26px;
+  }
+  @media (max-width:700px){.role-row{grid-template-columns:1fr;gap:6px;}}
+  .role-row .role-name{font-weight:700;font-size:15px;}
+  .role-row .role-font{font-size:14.5px;color:var(--paper-text);opacity:.85;}
+  .role-row .role-example{font-size:16px;text-align:right;}
+  @media (max-width:700px){.role-row .role-example{text-align:left;}}
+
+  .pattern-row{display:flex;gap:34px;align-items:center;margin-top:40px;flex-wrap:wrap;}
+  .pattern-swatch{width:120px;height:120px;flex:none;border-radius:6px;}
+  .checker{
+    background-image:linear-gradient(45deg, var(--green-card) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--green-card) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--green-card) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--green-card) 75%);
+    background-color:#fff;background-size:30px 30px;background-position:0 0,0 15px,15px -15px,-15px 0px;
+  }
+  .gridpattern{
+    background-image:linear-gradient(var(--mustard) 1px, transparent 1px), linear-gradient(90deg, var(--mustard) 1px, transparent 1px);
+    background-size:30px 30px;border:1px solid var(--mustard);background-color:transparent;
+  }
+  .pattern-text{max-width:560px;}
+  .pattern-text h4{margin:0 0 12px;font-family:'PT Mono',monospace;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;}
+  .pattern-text p{margin:0;font-size:15px;line-height:1.55;color:var(--ink-2);}
+
+  /* ---------- logo section ---------- */
+  .logo-grid{display:grid;grid-template-columns:380px 1fr;gap:56px;align-items:center;margin-top:8px;}
+  @media (max-width:820px){.logo-grid{grid-template-columns:1fr;}}
+  .logo-frame{background:var(--paper-raised);border-radius:16px;padding:20px;}
+
+  /* ---------- form / dark section ---------- */
+  .dark-section{background:var(--ink);color:var(--paper-text);}
+  .dark-section .eyebrow{color:var(--muted-on-dark);}
+  .dark-section .step-num{border-color:var(--green);color:var(--paper-text);}
+  .dark-section .brandline{
+    display:flex;align-items:center;gap:10px;font-weight:800;margin-bottom:36px;
+  }
+  .dark-section .brandline .ring{width:20px;height:20px;border-radius:50%;border:3.5px solid var(--green);}
+  .form-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:start;margin-top:10px;}
+  @media (max-width:900px){.form-grid{grid-template-columns:1fr;}}
+  .tees{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .caps{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+  .photo-card{background:#1a1109;border-radius:14px;padding:16px;text-align:center;}
+  .photo-card img{border-radius:8px;}
+  .photo-card .cap{margin-top:10px;font-size:13px;color:var(--muted-on-dark);}
+  .form-text h4{font-size:18px;margin:0 0 8px;}
+  .form-text p{font-size:15px;line-height:1.55;color:var(--paper-text);opacity:.92;margin:0 0 26px;}
+
+  /* ---------- packaging 3col ---------- */
+  .pack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:34px;}
+  @media (max-width:900px){.pack-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:600px){.pack-grid{grid-template-columns:1fr;}}
+  .pack-item .frame{background:var(--ink);border-radius:14px;padding:26px;display:flex;align-items:center;justify-content:center;min-height:200px;}
+  .pack-item .frame img{max-height:200px;width:auto;margin:0 auto;}
+  .pack-item h4{font-size:17px;margin:18px 0 8px;font-weight:700;}
+  .pack-item p{font-size:14.5px;line-height:1.55;color:var(--ink-2);margin:0;}
+
+  /* ---------- packaging external/internal ---------- */
+  .box-grid{display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:36px;align-items:start;margin-top:34px;}
+  @media (max-width:900px){.box-grid{grid-template-columns:1fr;}}
+  .box-card{text-align:center;}
+  .box-card .frame{background:var(--paper-raised);border-radius:14px;padding:22px;}
+  .box-card p.cap{margin-top:14px;font-size:14.5px;font-weight:700;}
+  .box-text p{font-size:15px;line-height:1.6;color:var(--ink-2);margin:0 0 16px;}
+  .box-text p:last-child{margin-bottom:0;}
+
+  /* ---------- menu ---------- */
+  .menu-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:start;margin-top:8px;}
+  @media (max-width:900px){.menu-grid{grid-template-columns:1fr;}}
+  .menu-photo{border-radius:14px;overflow:hidden;border:1px solid var(--line);}
+
+  /* ---------- tochka floor plan ---------- */
+  .floorplan{
+    background:var(--paper-raised);border-radius:16px;margin-top:40px;padding:28px 30px 30px 0;
+    border-left:10px solid var(--ink);position:relative;
+  }
+  .floorplan .street{font-family:'PT Mono',monospace;font-size:12px;letter-spacing:2px;color:var(--muted);padding-left:30px;margin-bottom:20px;text-transform:uppercase;}
+  .floorplan-boxes{display:grid;grid-template-columns:1.1fr 1fr 1.1fr;gap:20px;padding:0 30px;}
+  @media (max-width:780px){.floorplan-boxes{grid-template-columns:1fr;}}
+  .fp-box{border-radius:10px;padding:18px 20px;border:2px solid;}
+  .fp-box.kitchen{border-color:#2B5CA8;color:#2B5CA8;background:#fff;min-height:130px;}
+  .fp-box.order{border-color:var(--ink);color:var(--ink);background:#fff;}
+  .fp-box.courier{border-color:var(--green);color:var(--green-deep);background:var(--green-mint);}
+  .fp-box .fp-title{font-family:'PT Mono',monospace;font-weight:700;font-size:13.5px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .fp-box p{margin:0;font-size:13.5px;color:var(--ink-2);}
+  .fp-box.kitchen p{color:#2B5CA8;}
+  .fp-box.courier p{color:var(--green-deep);}
+  .fp-dashed{
+    margin-top:14px;border:2px dashed var(--muted);border-radius:10px;padding:14px 20px;
+    font-family:'PT Mono',monospace;font-size:13px;letter-spacing:.5px;
+  }
+  .materials-line{padding:22px 30px 4px;font-size:14px;line-height:1.6;color:var(--ink-2);}
+  .locations-line{margin-top:20px;font-size:14px;color:var(--ink-2);}
+  .locations-line b{font-family:'PT Mono',monospace;font-weight:700;letter-spacing:.5px;}
+
+  /* ---------- geography circles ---------- */
+  .geo-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:center;margin-top:8px;}
+  @media (max-width:820px){.geo-grid{grid-template-columns:1fr;}}
+  .geo-svg{width:100%;max-width:520px;margin:0 auto;display:block;}
+  .geo-svg text{font-family:'Manrope',sans-serif;font-size:13px;fill:var(--ink);}
+  .geo-svg .dotlabel{font-weight:700;}
+
+  footer.site{
+    border-top:1px solid var(--line);padding:32px 0 60px;
+    font-family:'PT Mono',monospace;font-size:12.5px;color:var(--muted);
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="nav-row">
+    <div class="brand"><span class="ring"></span>BAGEL GO</div>
+    <nav class="navlinks" id="navlinks">
+      <a href="#rynok" data-id="rynok">Рынок</a>
+      <a href="#idea" data-id="idea">Идея</a>
+      <a href="#golos" data-id="golos">Голос</a>
+      <a href="#identika" data-id="identika">Айдентика</a>
+      <a href="#menu" data-id="menu">Меню</a>
+      <a href="#tochka" data-id="tochka">Точка</a>
+      <a href="#zapusk" data-id="zapusk">Запуск</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="eyebrow">БРЕНД-КОНЦЕПЦИЯ · СЕТЬ БЕЙГЕЛЬНЫХ ДЛЯ МОСКВЫ</div>
+    <h1>BAGEL GO</h1>
+    <p class="lede">Бейгл на бегу как полноценный приём пищи, а не перекус — конкурирует не с другими бейгельными, а с привычкой пропускать обед или заменять его нездоровым фастфудом.</p>
+    <div class="credit">Подготовлено Карачёвой Инной · сентябрь 2026</div>
+  </section>
+
+  <!-- ================= РЫНОК ================= -->
+  <section class="chapter" id="rynok">
+
+    <div class="loop">
+      <div class="eyebrow">ВИТОК ПЕРВЫЙ</div>
+      <div class="step-head">
+        <div class="step-num">1</div>
+        <h2 class="step-title">Что уже происходит на рынке</h2>
+      </div>
+
+      <div class="rynok-grid">
+        <div>
+          <p class="lede">В Москве бейгл нигде не главный герой — пункт меню в кофейнях широкого профиля. Специализированных сетевых бейгельных с собственной доставкой в городе нет ни одной.</p>
+          <p class="lede">Ближе всего подошёл <b>поп-ап Nephew (Покровка)</b>: 3 позиции в меню, очередь с открытия, стабильный солдаут к обеду — прямое доказательство спроса без сети и без доставки.</p>
+
+          <div class="card dark" style="margin-top:26px;">
+            <div class="card-head"><span class="sub-heading" style="margin:0;">СВОБОДНОЕ МЕСТО</span></div>
+            <p>Первый бейгл-бренд Москвы, который выходит сразу сетью точек и с доставкой как основным каналом — не второстепенным.</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="table-wrap">
+            <table class="market">
+              <thead>
+                <tr><th>Место</th><th>Формат</th><th>Бейгл, ₽</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Nephew</td><td>поп-ап, только бейглы</td><td>640–990</td></tr>
+                <tr><td>Bagel 1st</td><td>бейгл + кофе, 1 точка</td><td>350</td></tr>
+                <tr><td>The Bagel Bar</td><td>кофейня, бейгл в меню</td><td>400–500</td></tr>
+                <tr><td>Daily Green / Nude / Zionist</td><td>кафе широкого профиля</td><td>390–550</td></tr>
+                <tr><td>Lambic / Аэроплан.Кофе</td><td>премиальная подача</td><td>750–790</td></tr>
+                <tr><td>BAGEL GO</td><td>сеть + доставка</td><td>390–650</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="foot-note">*Таблица составлена по открытым обзорам The City, «Афиша» и Timeout, 2026.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="loop">
+      <div class="eyebrow">ВИТОК ВТОРОЙ</div>
+      <div class="step-head">
+        <div class="step-num">2</div>
+        <h2 class="step-title">Кому и зачем?</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card dark">
+          <div class="card-head"><span class="dot red"></span><span class="label">КОМУ</span></div>
+          <p>Основная аудитория — городские 24–40 лет: работают в офисе или из кафе, привыкли обедать быстро, но раздражены выбором между «быстро и вредно» и «полезно и долго». Живут и работают в пределах Садового – ТТК, заказывают доставку на завтрак и обед.</p>
+          <p>Вторичная — гастро-аудитория, которая уже стоит в очередях за Nephew и готова прийти за новым местом ради самого продукта и картинки.</p>
+          <div class="sub-block">
+            <div class="sub-heading">Свободное место</div>
+            <p style="margin:0;">Первый бейгл-бренд Москвы, который выходит сразу сетью точек и с доставкой как основным каналом — не второстепенным.</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="card green">
+            <div class="card-head"><span class="dot white"></span><span class="label">ЗАЧЕМ</span></div>
+            <p>«Один бейгл — весь баланс»: белки, углеводы, жиры, клетчатка в одном продукте, которого достаточно, чтобы полноценно поесть за 5 минут на бегу.</p>
+            <p style="margin:0;">Это позволяет говорить прямо: <i>быстрая еда, от которой не тяжелеешь к трём часам дня.</i></p>
+          </div>
+          <div class="quote-block">
+            <div class="label"><span class="dot green" style="width:22px;height:22px;"></span>JTBD:</div>
+            <p>«Мне нужно быстро и вкусно поесть на бегу — и не чувствовать, что я предал своё тело ради экономии 20 минут»</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ИДЕЯ ================= -->
+  <section class="chapter" id="idea">
+
+    <div class="loop">
+      <div class="eyebrow">ВИТОК ТРЕТИЙ</div>
+      <div class="step-head">
+        <div class="step-num">3</div>
+        <h2 class="step-title">Идея бренда</h2>
+      </div>
+
+      <div class="idea-grid">
+        <div>
+          <div class="idea-photo"><img src="idea-photo.jpg" alt="Бейгл в коробке и стакан кофе"></div>
+          <div class="idea-tag"><span class="big">ОДИН БЕЙГЛ</span><br><span class="small">весь баланс</span></div>
+        </div>
+        <div>
+          <p class="lede">Городской человек 24–40 лет обедает на бегу почти каждый день — между встречами, по дороге в офис, в перерыве между делами. Как правило, у него по факту два варианта: пропустить приём пищи или схватить что-то быстрое и несбалансированное. Первое бьёт по энергии и концентрации до конца дня, второе — по ощущению «я опять съел не то».</p>
+          <p class="lede"><b>BAGEL GO закрывает этот разрыв.</b> Один бейгл — не перекус между делами, а полноценный приём пищи: белки, углеводы, жиры и клетчатка в одном продукте, которого достаточно, чтобы не пропускать обед и не жертвовать балансом ради скорости.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="loop">
+      <div class="eyebrow">ВИТОК ТРЕТИЙ</div>
+      <div class="step-head">
+        <div class="step-num">3</div>
+        <h2 class="step-title">Позиционирование</h2>
+      </div>
+
+      <p class="lede">Для городских жителей, которые обедают на бегу и следят за тем, что едят, BAGEL GO — сеть бейгельных, которая заменяет полноценный приём пищи, а не дополняет его перекусом. В отличие от привычного фастфуда на бегу, каждый бейгл закрывает белки, углеводы, жиры и клетчатку одним продуктом за 5 минут — без стола, без меню на десять минут выбора, без компромисса.</p>
+
+      <div class="pos-grid">
+        <div class="pos-card">
+          <div class="card-head"><span class="dot white"></span><span class="label">Скорость</span></div>
+          <p>От заказа до первого укуса — минуты, а не приём пищи «с рассадкой».</p>
+        </div>
+        <div class="pos-card">
+          <div class="card-head"><span class="dot white"></span><span class="label">Честность</span></div>
+          <p>Состав виден и понятен — никаких «секретных» соусов ради вкуса в ущерб пользе.</p>
+        </div>
+        <div class="pos-card">
+          <div class="card-head"><span class="dot white"></span><span class="label">Польза</span></div>
+          <p>В каждом бейгле закрыт баланс: белок, сложные углеводы, полезные жиры, клетчатка.</p>
+        </div>
+        <div class="pos-card">
+          <div class="card-head"><span class="dot white"></span><span class="label">Достаточность</span></div>
+          <p>Этого бейгла реально хватает. Не «перехватить».</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ГОЛОС ================= -->
+  <section class="chapter" id="golos">
+    <div class="loop">
+      <div class="eyebrow">ВИТОК ЧЕТВЕРТЫЙ</div>
+      <div class="step-head">
+        <div class="step-num">4</div>
+        <h2 class="step-title">Tone of voice</h2>
+      </div>
+      <p class="lede">Обращение — на «ты». Бренд говорит так же, как ест его аудитория — быстро, по делу, без лишних слов. Ниже — принципы и то, как они звучат в реальных точках контакта.</p>
+
+      <div class="voice-row">
+        <h3>Полезный друг,<br>а не диетолог</h3>
+        <p>Мы знаем состав и цифры, но не читаем лекций и не стыдим за вчерашний бигмак. Тон — как у друга, который подскажет вариант получше, когда ты спешишь.</p>
+      </div>
+      <div class="voice-row">
+        <h3>Ритм на бегу</h3>
+        <p>Говорим то, что есть, без метафор, которые нужно расшифровывать. «Белки. Углеводы. Жиры. Клетчатка. Всё — в одном бейгле» — а не образы про эмаль и витрины.</p>
+      </div>
+      <div class="voice-row">
+        <h3>Теплое обращение</h3>
+        <p>Не давим на то, что человек «плохо питается» или «опять на бегу». Мы здесь, чтобы помочь, а не осудить.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= АЙДЕНТИКА ================= -->
+  <section class="chapter" id="identika">
+
+    <div class="loop">
+      <div class="eyebrow">ВИТОК ПЯТЫЙ</div>
+      <div class="step-head">
+        <div class="step-num">5</div>
+        <h2 class="step-title">Визуальный язык</h2>
+      </div>
+      <p class="lede">Минимализм здесь — не стиль ради стиля, а функция: имя и цвет должны сообщать «полезно» мгновенно, без дополнительной расшифровки. Меньше декора — больше воздуха и чёткости.</p>
+
+      <h3 class="section-gap-title" style="margin-top:44px;">Палитра</h3>
+      <div class="palette-strip">
+        <div class="swatch" style="background:var(--green-deep);color:var(--paper-text);"><span class="hex">#123D28</span><span class="name">Deep green</span></div>
+        <div class="swatch" style="background:var(--red);color:var(--paper-text);"><span class="hex">#C2391E</span><span class="name">Кетчуп / паприка</span></div>
+        <div class="swatch" style="background:var(--mustard);color:var(--ink);"><span class="hex">#D79A3B</span><span class="name">Тост / крафт</span></div>
+        <div class="swatch" style="background:var(--green);color:var(--paper-text);"><span class="hex">#1F7A4D</span><span class="name">Bagel green</span></div>
+        <div class="swatch" style="background:var(--paper);color:var(--ink);border:1px solid var(--line);"><span class="hex">#F3E7D4</span><span class="name">Тесто (фон)</span></div>
+        <div class="swatch" style="background:var(--ink);color:var(--paper-text);"><span class="hex">#211A12</span><span class="name">Чернила</span></div>
+      </div>
+      <p class="lede" style="margin-top:26px;">Зелёный — прямой, однозначный код пользы. Он основной, а не акцент, — в отличие от прежней палитры, где зелёный был лишь одним из нескольких равнозначных цветов. Красный и горчичный — акценты, а не основа: перец чили и соус как обещание, что внутри не только тесто.</p>
+    </div>
+
+    <div class="loop">
+      <div class="eyebrow">ВИТОК ПЯТЫЙ</div>
+      <div class="step-head">
+        <div class="step-num">5</div>
+        <h2 class="step-title">Визуальный язык</h2>
+      </div>
+      <div class="eyebrow" style="color:var(--green);margin-top:-10px;">ШРИФТОВЫЕ РОЛИ</div>
+
+      <div class="role-rows">
+        <div class="role-row">
+          <span class="role-name">Знак и заголовки</span><span class="role-font mono">Unbounded 900</span><span class="role-example" style="font-family:'Unbounded',sans-serif;font-weight:800;">КОЛЬЦО</span>
+        </div>
+        <div class="role-row">
+          <span class="role-name">Текст и описания</span><span class="role-font mono">PT Serif</span><span class="role-example">Быстрая еда, полезная еда</span>
+        </div>
+        <div class="role-row">
+          <span class="role-name">Меню, цены, лейблы</span><span class="role-font mono">PT Mono</span><span class="role-example mono">650 ₽ · №014</span>
+        </div>
+      </div>
+
+      <div class="pattern-row">
+        <div class="pattern-swatch checker"></div>
+        <div class="pattern-swatch gridpattern"></div>
+        <div class="pattern-text">
+          <h4>Клетка и полоса — фирменный узор</h4>
+          <p>Клетка деревенской бургерной и кафельный пол нью-йоркского дели — общий предок. Используем как акцент: кромка меню, обёрточная бумага, плитка на входе в заведение.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="loop">
+      <div class="eyebrow">ВИТОК ПЯТЫЙ</div>
+      <div class="step-head">
+        <div class="step-num">5</div>
+        <h2 class="step-title">Логотип</h2>
+      </div>
+      <div class="logo-grid">
+        <div class="logo-frame"><img src="logo-mark.jpg" alt="Логотип GO bagel"></div>
+        <div>
+          <p class="lede">Кольцо — это одновременно буква «О» в слове GO и форма бейгла: кольцо теста, свёрнутое в круг. Буква «G» — она читается ещё и как стрелка, идущая сама за собой: замкнутая петля без начала и конца, взгляд обегает её по кругу, не останавливаясь.</p>
+          <p class="lede">Это и есть «на бегу» в чистом виде — движение, которое не заканчивается, а не разовый жест указателя. Один знак закрывает сразу три смысла: буква, продукт, движение — не нужно рисовать отдельно бейгл и отдельно значок стрелки.</p>
+          <p class="lede">Внутрь кольца встроена нашивка с надписью «bagel» — будто пришитая. Она работает как маленькая печать.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="loop dark-section" style="margin:0 -24px;padding-left:24px;padding-right:24px;border-radius:0;">
+      <div class="brandline"><span class="ring"></span>BAGEL GO</div>
+      <div class="eyebrow">ВИТОК ПЯТЫЙ</div>
+      <div class="step-head">
+        <div class="step-num">5</div>
+        <h2 class="step-title">Форма для сотрудников</h2>
+      </div>
+
+      <div class="form-grid">
+        <div>
+          <div class="tees">
+            <div class="photo-card"><img src="tshirts.jpg" alt="Футболки BAGEL GO, сторона 1 и сторона 2" style="border-radius:8px;"><div class="cap">Сторона 1 · Сторона 2</div></div>
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <div class="photo-card"><img src="cap-cream.png" alt="Кепка вариант 1"><div class="cap">Вариант 1</div></div>
+              <div class="photo-card"><img src="cap-green.png" alt="Кепка вариант 2"><div class="cap">Вариант 2</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="form-text">
+          <h4>Футболка</h4>
+          <p>На футболке представлена надпись «BAGEL GO» на стороне 1 и стороне 2. Основной цвет ткани — тесто (CREAM).</p>
+          <h4>Кепка</h4>
+          <p>Первый вариант представлен с нашивкой-патч со знаком: стрелка, которая идёт по кругу, и сам круг, который означает бейгл. Второй вариант представлен с нашивкой надписи «BAGEL GO».</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="loop">
+      <div class="eyebrow">ВИТОК ПЯТЫЙ</div>
+      <div class="step-head">
+        <div class="step-num">5</div>
+        <h2 class="step-title">Упаковка</h2>
+      </div>
+
+      <div class="pack-grid">
+        <div class="pack-item">
+          <div class="frame"><img src="cup.png" alt="Стаканчик для напитков"></div>
+          <h4>Стаканчик для напитков</h4>
+          <p>Минимальный дизайн — только знак GO — держит ту же логику, что и остальная айдентика: ничего лишнего, только вордмарк.</p>
+        </div>
+        <div class="pack-item">
+          <div class="frame"><img src="box-closed.png" alt="Упаковка для одного бейгла"></div>
+          <h4>Упаковка для одного бейгла</h4>
+          <p>Формат рассчитан на одного человека и один полноценный приём пищи — поэтому коробка компактная, под один бейгл. Бренд не пытается продать «побольше», он утверждает, что одного бейгла достаточно. Надпись на крышке — «Пока вы спали, кто-то уже собрал ваш обед вручную» — работает на принцип честности: бейгл не с конвейера, а собран руками, рано утром, под конкретный заказ.</p>
+        </div>
+        <div class="pack-item">
+          <div class="frame"><img src="napkin-gloves.png" alt="Влажная салфетка и перчатки"></div>
+          <h4>Влажная салфетка и перчатки</h4>
+          <p>Это функциональная часть позиционирования «на бегу»: если человек ест по дороге на встречу или между делами, у него не должно остаться следов — ни на руках, ни на одежде, ни потом на телефоне или клавиатуре. Это не про эстетику упаковки, а про то, чтобы полноценный приём пищи на ходу физически не создавал неудобств, — собственно то, ради чего вся концепция BAGEL GO и затевалась.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="loop">
+      <div class="eyebrow">ВИТОК ПЯТЫЙ</div>
+      <div class="step-head">
+        <div class="step-num">5</div>
+        <h2 class="step-title">Упаковка</h2>
+      </div>
+      <p class="lede">Это внешняя и внутренняя сторона одной упаковки.</p>
+
+      <div class="box-grid">
+        <div class="box-card">
+          <div class="frame"><img src="box-external.png" alt="Внешняя сторона упаковки"></div>
+          <p class="cap">Внешняя сторона</p>
+        </div>
+        <div class="box-card">
+          <div class="frame"><img src="box-internal.png" alt="Внутренняя сторона упаковки"></div>
+          <p class="cap">Внутренняя сторона</p>
+        </div>
+        <div class="box-text">
+          <p>На внешней стороне вордмарк BAGEL GO и сплошная зелёная плашка, без узора и без реплик. Контрастный узор и логотип заведения работает быстро и привлекает внимание.</p>
+          <p>Внутренняя сторона — это то, что видит человек, который открыл коробку сам — что-то вроде тихой подписи после громкой обложки. Надпись «Вкусного перерыва» является обращением к клиенту, чтобы он замедлился и вкусно пообедал. Надпись «Обед закончился, а мы нет» покупатель замечает лишь тогда, когда съедает бейглы.</p>
+          <p>Разница между шумной внешней стороной и тихой внутренней ровно повторяет саму суть бренда: снаружи — скорость и «на бегу», внутри, когда человек наконец остановился и открыл коробку, — более личный, спокойный момент один на один с едой.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= МЕНЮ ================= -->
+  <section class="chapter" id="menu">
+    <div class="loop">
+      <div class="eyebrow">ВИТОК ШЕСТЬ</div>
+      <div class="step-head">
+        <div class="step-num">6</div>
+        <h2 class="step-title">Меню</h2>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-photo"><img src="menu-board.jpg" alt="Меню-борд BAGEL GO"></div>
+        <p class="lede">Меню на шесть бейглов — состав и БЖУ+клетчатка подобраны так, чтобы каждый действительно закрывал полноценный приём пищи, а не был лёгкой добавкой.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ТОЧКА ================= -->
+  <section class="chapter" id="tochka">
+    <div class="loop">
+      <div class="eyebrow">ВИТОК СЕМЬ</div>
+      <div class="step-head">
+        <div class="step-num">7</div>
+        <h2 class="step-title">Точка</h2>
+      </div>
+      <p class="lede">40–70 м², окно-витрина на улицу, за которым видно, как бублики варятся и садятся в печь — главная реклама точки, работающая без бюджета. Отдельная зона выдачи для курьеров критична операционно: не там же, где живая очередь гостей.</p>
+
+      <div class="floorplan">
+        <div class="street">Улица</div>
+        <div class="floorplan-boxes">
+          <div>
+            <div class="fp-box kitchen">
+              <div class="fp-title">Открытая кухня</div>
+              <p>варка · печь · видно с улицы</p>
+            </div>
+          </div>
+          <div>
+            <div class="fp-box order">
+              <div class="fp-title">Стойка заказа</div>
+              <p>касса · витрина бейглов</p>
+            </div>
+            <div class="fp-dashed">БАРНАЯ СТОЙКА · 3–4 места</div>
+          </div>
+          <div>
+            <div class="fp-box courier">
+              <div class="fp-title">Выдача курьерам</div>
+              <p>отдельный вход/полка — не пересекается с очередью гостей</p>
+            </div>
+          </div>
+        </div>
+        <div class="materials-line"><b>Материалы:</b> тёплое дерево, кафель-шашечка у стойки, латунный поручень у входа, проволочные корзины с бейглами на виду — как в нью-йоркском дели.</div>
+      </div>
+      <div class="locations-line"><b>Локации:</b> первый этаж, угол с двух улиц, видимость от метро.</div>
+    </div>
+  </section>
+
+  <!-- ================= ЗАПУСК ================= -->
+  <section class="chapter" id="zapusk">
+
+    <div class="loop">
+      <div class="eyebrow">ВИТОК ВОСЕМЬ</div>
+      <div class="step-head">
+        <div class="step-num">8</div>
+        <h2 class="step-title">География</h2>
+      </div>
+
+      <div class="geo-grid">
+        <p class="lede">Логотип задаёт и логику роста. Точки идут по Садовому кольцу и в последующем могут продвигаться дальше.</p>
+        <svg class="geo-svg" viewBox="0 0 480 480">
+          <circle cx="240" cy="240" r="230" fill="none" stroke="#211A12" stroke-width="2" stroke-dasharray="8 7"/>
+          <circle cx="240" cy="240" r="165" fill="none" stroke="#C2391E" stroke-width="2"/>
+          <circle cx="240" cy="240" r="100" fill="none" stroke="#1F7A4D" stroke-width="2"/>
+          <circle cx="240" cy="140" r="5" fill="#D79A3B"/>
+          <text x="180" y="128" class="dotlabel">Новослободская</text>
+          <circle cx="164" cy="182" r="5" fill="#D79A3B"/>
+          <text x="70" y="178" class="dotlabel">Белорусская</text>
+          <circle cx="340" cy="240" r="5" fill="#D79A3B"/>
+          <text x="352" y="244" class="dotlabel">Курская</text>
+          <circle cx="177" cy="322" r="5" fill="#D79A3B"/>
+          <text x="80" y="342" class="dotlabel">Парк культуры</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="loop">
+      <div class="eyebrow">ВИТОК ДЕВЯТЫЙ</div>
+      <div class="step-head">
+        <div class="step-num">9</div>
+        <h2 class="step-title">Запуск</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card dark">
+          <div class="card-head"><span class="dot red"></span><span class="label">Что готово</span></div>
+          <p style="margin-bottom:26px;">Что мы прошли — рынок без сетевых бейгельных, идею «один бейгл — весь баланс», честный голос, зелёную айдентику, меню и точку с открытой кухней на витрину.</p>
+          <div class="sub-block" style="margin-top:0;padding-top:22px;">
+            <div class="sub-heading">География запуска</div>
+            <p style="margin:0;">Первая точка — на Садовом кольце: Новослободская, Белорусская, Курская или Парк культуры. Дальше — тот же принцип, кольцами, до МКАД.</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="card green">
+            <div class="card-head"><span class="dot white"></span><span class="label">Итог</span></div>
+            <p>«Один бейгл — весь баланс»: белки, углеводы, жиры, клетчатка в одном продукте, которого достаточно, чтобы полноценно поесть за 5 минут на бегу.</p>
+            <p style="margin:0;"><i>Это позволяет говорить прямо: быстрая еда, от которой не тяжелеешь к трём часам дня.</i></p>
+          </div>
+          <div class="quote-block">
+            <div class="label"><span class="dot green" style="width:22px;height:22px;"></span>Напоследок:</div>
+            <p>«Первый бейгл-бренд Москвы, который выходит сразу сетью точек и с доставкой как основным каналом — не второстепенным»</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="site">
+    <span>BAGEL GO · бренд-концепция</span>
+    <span>Подготовлено Карачёвой Инной · сентябрь 2026</span>
+  </footer>
+</main>
+
+<script>
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('#navlinks a'));
+    var sections = links.map(function(l){ return document.getElementById(l.dataset.id); }).filter(Boolean);
+    function onScroll(){
+      var y = window.scrollY + 120;
+      var current = sections[0];
+      for (var i=0;i<sections.length;i++){
+        if (sections[i].offsetTop <= y) current = sections[i];
+      }
+      links.forEach(function(l){
+        l.classList.toggle('active', l.dataset.id === current.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+  })();
+</script>
+
+</body>
+</html>
